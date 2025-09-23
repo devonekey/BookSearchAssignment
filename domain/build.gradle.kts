@@ -16,6 +16,7 @@ kotlin {
 
 dependencies {
     implementation(libs.jetbrains.kotlinx.coroutines.core)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
 }
