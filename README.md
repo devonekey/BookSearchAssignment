@@ -14,6 +14,7 @@
   - JDK: 21
   - Kotlin: 2.0.21
 - 빌드 방법
+  - [local.properties](local.properties) 파일에 REST API 키 입력 (ex. KAKAO_REST_API_KEY=**********)
   - CLI에서 "./gradlew assembleDebug" 입력
 
 ### 🛠️ 사용 프레임워크
