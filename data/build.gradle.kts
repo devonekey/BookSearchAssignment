@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.squareup.retrofit.converter.gson)
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.squareup.okhttp3.mockwebserver)
     testRuntimeOnly(libs.junit.jupiter.engine)
     ksp(libs.google.dagger.hilt.compiler)
     androidTestImplementation(libs.androidx.junit)
