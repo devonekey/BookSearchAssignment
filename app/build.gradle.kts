@@ -1,3 +1,11 @@
+import java.util.Properties
+
+val localProps = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+val kakaoKey: String = localProps.getProperty("KAKAO_REST_API_KEY") ?: ""
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +25,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "KAKAO_REST_API_KEY", "\"$kakaoKey\"")
+        buildConfigField("String", "KAKAO_BASE_URL", "\"https://dapi.kakao.com/\"")
     }
 
     buildTypes {
