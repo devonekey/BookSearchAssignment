@@ -20,17 +20,20 @@ import java.util.Date
  * @property isBookmarked 북마크 여부
  */
 data class Book(
-    val title: String,
-    val contents: String,
-    val url: String,
-    val isbn: String,
-    val datetime: Date,
-    val authorList: List<String>,
-    val publisher: String,
-    val translatorList: List<String>,
-    val price: Int,
-    val salePrice: Int,
-    val thumbnail: String,
-    val status: String,
-    val isBookmarked: Boolean
-)
+    val title: String = "",
+    val contents: String = "",
+    val url: String = "",
+    val isbn: String = "",
+    val datetime: Date = Date(),
+    val authorList: List<String> = emptyList(),
+    val publisher: String = "",
+    val translatorList: List<String> = emptyList(),
+    val price: Int = -1,
+    val salePrice: Int = -1,
+    val thumbnail: String = "",
+    val status: String = "",
+    val isBookmarked: Boolean = false
+) {
+    val effectivePrice: Int
+        get() = if (salePrice > 0) salePrice else price
+}
