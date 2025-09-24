@@ -38,6 +38,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.google.gson)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.gson)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
