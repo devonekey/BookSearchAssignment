@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "BookSearchAssignment"
 include(":app")
 include(":domain")
+include(":data")
