@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.project
 import java.util.Properties
 
 val localProps = Properties().apply {
@@ -9,6 +10,8 @@ val kakaoKey: String = localProps.getProperty("KAKAO_REST_API_KEY") ?: ""
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.dagger.hilt.android)
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
@@ -55,6 +58,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.google.dagger.hilt.android)
+    ksp(libs.google.dagger.hilt.compiler)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
