@@ -7,6 +7,8 @@ android {
     namespace = "com.booksearch.assignment"
     compileSdk = 36
 
+    buildFeatures { buildConfig = true }
+
     defaultConfig {
         applicationId = "com.booksearch.assignment"
         minSdk = 28
