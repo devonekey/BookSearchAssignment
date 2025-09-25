@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.booksearch.assignment.R
 import com.booksearch.assignment.presentation.ui.components.BookSearchContent
+import com.booksearch.assignment.presentation.ui.components.BookmarkContent
 
 @Composable
 fun MainScreen(navController: NavHostController) {
@@ -43,9 +44,10 @@ fun MainScreen(navController: NavHostController) {
                 modifier = Modifier.padding(paddingValues = paddingValues),
                 onOpen = { isbn -> navController.navigate("detail/$isbn") }
             )
-            else -> {
-
-            }
+            else -> BookmarkContent(
+                modifier = Modifier.padding(paddingValues = paddingValues),
+                onOpen = { isbn -> navController.navigate("detail/$isbn") }
+            )
         }
     }
 }
