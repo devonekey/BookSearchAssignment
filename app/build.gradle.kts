@@ -44,11 +44,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures {
         compose = true
@@ -56,6 +53,10 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
     }
+}
+
+hilt {
+    enableAggregatingTask = false
 }
 
 dependencies {
@@ -74,6 +75,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil.compose)
+    implementation(libs.google.gson)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.gson)
     ksp(libs.google.dagger.hilt.compiler)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
