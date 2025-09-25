@@ -38,25 +38,25 @@ hilt {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(libs.androidx.core.ktx)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
-    implementation(libs.material)
     implementation(libs.google.dagger.hilt.android)
     implementation(libs.google.gson)
+    implementation(libs.material)
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.converter.gson)
+    implementation(project(":domain"))
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.google.dagger.hilt.compiler)
     testImplementation(libs.androidx.room.testing)
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.squareup.okhttp3.mockwebserver)
     testRuntimeOnly(libs.junit.jupiter.engine)
-    ksp(libs.androidx.room.compiler)
-    ksp(libs.google.dagger.hilt.compiler)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 tasks.withType<Test> {
