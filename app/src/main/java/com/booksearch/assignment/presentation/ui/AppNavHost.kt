@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.booksearch.assignment.presentation.ui.screen.BookScreen
 import com.booksearch.assignment.presentation.ui.screen.MainScreen
 
 @Composable
@@ -17,6 +18,15 @@ fun AppNavHost() {
         composable(route = "main") {
             MainScreen(navController = navController)
         }
-        composable(route = "detail/{isbn}") { backStack -> }
+        composable(route = "detail/{isbn}") { backStack ->
+            val isbn = backStack.arguments
+                ?.getString("isbn")
+                ?: return@composable
+
+            BookScreen(
+                isbn = isbn,
+                onBack = { navController.popBackStack() }
+            )
+        }
     }
 }
