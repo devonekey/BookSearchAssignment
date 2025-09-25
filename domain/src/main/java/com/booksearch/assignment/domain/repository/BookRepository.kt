@@ -63,4 +63,9 @@ interface BookRepository {
      * @return 북마크된 도서인지 여부
      */
     suspend fun isBookmark(book: Book): Boolean
+
+    /**
+     * 캐시를 초기화하는 함수
+     */
+    suspend fun resetCache()
 }

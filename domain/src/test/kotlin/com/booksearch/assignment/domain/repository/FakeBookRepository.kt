@@ -59,4 +59,6 @@ class FakeBookRepository : BookRepository {
     }
 
     override suspend fun isBookmark(book: Book): Boolean = bookmarkedBooks.contains(book)
+
+    override suspend fun resetCache() {}
 }

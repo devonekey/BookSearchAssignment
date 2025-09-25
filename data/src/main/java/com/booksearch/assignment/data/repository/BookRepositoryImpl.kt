@@ -138,4 +138,13 @@ class BookRepositoryImpl @Inject constructor(
 
     override suspend fun isBookmark(book: Book): Boolean =
         localDataSource.observeBy(book.isbn).first() != null
+
+    override suspend fun resetCache() {
+        cacheLock.withLock {
+            cache.clear()
+
+            currentPage = 1
+            lastKey = null
+        }
+    }
 }
