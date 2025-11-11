@@ -12,12 +12,13 @@
 
 ## 🛠️ 핵심 기술
 
-- 언어: Kotlin 2.2.20
+- 언어: Kotlin 2.2.20 (Coroutine 및 Flow 활용)
 - UI: XML 레이아웃
-- 아키텍처: Clean Architecture
+- 아키텍처: Clean Architecture (app, domain 모듈 분리)
 - 빌드: Gradle 8.13 (Kotlin DSL)
 - 대상: Android API 28~36 (Android 9.0~15)
 - JDK: OpenJDK 21.0.5
+- 테스트: JUnit 5, MockWebServer
 
 ---
 
@@ -35,6 +36,7 @@
 
 ```bash
 ./gradlew test                       # 단위 테스트 실행 (전체)
+./gradlew :domain:test               # domain 모듈 테스트
 ./gradlew connectedAndroidTest       # 기기/에뮬레이터 기반 테스트 실행
 ```
 
@@ -53,6 +55,7 @@
 ```
 BookSearchAssignment/
 ├── app/                    # 프레젠테이션 계층 (UI, Activity, ViewModel)
+├── domain/                 # 도메인 계층 (비즈니스 로직, UseCase)
 ├── gradle/                 # Gradle 래퍼 및 설정
 ├── build.gradle.kts        # 루트 빌드 설정
 ├── settings.gradle.kts     # Gradle 설정
@@ -74,6 +77,48 @@ app/src/main/
 │   ├── values/                         # 컬러, 문자열, 테마 정의
 │   └── mipmap/                         # 앱 아이콘
 └── AndroidManifest.xml                 # 앱 메타데이터
+```
+
+### domain 모듈 (도메인 계층)
+
+```
+domain/src/main/kotlin/com/booksearch/assignment/domain/
+├── model/
+│   ├── input/
+│   │   ├── GetBookmarkedBooksQuery.kt  # 북마크된 도서들을 가져올 때 요구되는 질의
+│   │   ├── SearchBooksQuery.kt         # 도서들을 검색할 때 요구되는 질의
+│   │   └── ToggleBookmarkTarget.kt     # 도서를 북마크하거나 북마크를 제거하는 행위에 대한 입력
+│   ├── output/
+│   │   ├── BooksResult.kt              # 도서들을 검색하는 행위에 대한 결과
+│   │   └── ToggleBookmarkResult.kt     # 도서를 북마크하거나 북마크를 제거하는 행위에 대한 출력
+│   ├── Book.kt                         # 도서 모델
+│   └── Books.kt                        # 여러 도서들을 다루는 모델
+├── repository/
+│   └── BookRepository.kt               # 도서 Repository 인터페이스 정의
+└── usecase/
+    ├── GetBookmarkedBooksUseCase.kt    # 북마크된 도서들을 가져오는 유즈케이스
+    ├── ResetBookmarkedBooksUseCase.kt  # 가져온 북마크된 도서들을 초기화하고 다시 가져오는 유즈케이스
+    ├── ResetSearchedBooksUseCase.kt    # 검색된 도서들을 초기화하고 다시 검색하는 유즈케이스
+    ├── SearchBooksUseCase.kt           # 도서들을 검색하는 유즈케이스
+    ├── ToggleBookmarkUseCase.kt        # 도서를 북마크하거나 북마크를 제거하는 유즈케이스
+    └── UseCase.kt                      # 유즈케이스
+```
+
+### domain 모듈 테스트 코드
+
+```
+domain/src/test/kotlin/com/booksearch/assignment/domain/
+├── model/
+│   ├── BookTest.kt
+│   └── BooksTest.kt
+├── repository/
+│   └── FakeBookRepositoryImpl.kt
+└── usecase/
+    ├── GetBookmarkedBooksUseCaseTest.kt
+    ├── ResetBookmarkedBooksUseCaseTest.kt
+    ├── ResetSearchedBooksUseCaseTest.kt
+    ├── SearchBooksUseCaseTest.kt
+    └── ToggleBookmarkUseCaseTest.kt
 ```
 
 ---
@@ -116,15 +161,66 @@ AndroidManifest.xml
 - 원칙: 비즈니스 로직 포함 금지
 - 현황: Material3 테마 적용, 기본 MainActivity
 
+#### 2. 도메인 계층 (domain 모듈)
+
+- 책임: 비즈니스 로직 및 규칙 정의
+- 구성: UseCase, Repository 인터페이스, Entity
+- 특징: Android/Framework 의존성 없이 순수 Kotlin으로만 작성
+- 현황: 검색, 즐겨찾기 관련 UseCase 구현
+
 ---
 
 ## 🧪 테스트
+
+### 테스트 구조
+
+#### Domain 계층
+
+- 대상: UseCase, Entity, 비즈니스 로직
+- 방식: 외부 의존성 제거, 순수 로직 검증
+- 도구: JUnit 5
 
 ### 테스트 실행
 
 ```bash
 ./gradlew test                   # 전체 테스트
+./gradlew :domain:test           # domain 모듈만 테스트
 ```
+
+### 테스트 작성 원칙
+
+1. Given-When-Then 또는 Given-Expect 패턴 사용
+2. 성공 케이스뿐 아니라 실패 케이스도 검증
+3. 각 테스트는 독립적으로 실행 가능
+4. Mock/Fake 객체로 외부 의존성 격리
+5. 한 번에 하나의 기능만 검증
+
+---
+
+## 📖 개발 시 주의사항
+
+### 1. API Key 관리
+
+- API Key를 소스 코드에 직접 작성하지 않음
+- `local.properties`에 저장 후 BuildConfig를 통해 주입함
+- `.gitignore`에 `local.properties` 추가한 상태
+
+### 2. 계층 혼용 금지
+
+- 각 계층의 책임만 수행함
+- 계층 간 인터페이스를 통하여 통신함
+
+### 3. 테스트 의존성
+
+- 실제 API를 호출하여 테스트하지 않음
+- MockWebServer 또는 Fake 객체로 처리
+- 로컬에서 빠른 테스트 실행 추구
+
+### 4. 코루틴 사용
+
+- 비동기 작업은 코루틴으로 구현
+- suspend 함수로 순차적 실행
+- Flow로 데이터 스트림 관리
 
 ---
 
@@ -143,5 +239,9 @@ AndroidManifest.xml
 ### 라이브러리
 
 - [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
+
+### API 문서
+
+- [kakao developers](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book)
 
 ---
