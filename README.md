@@ -12,12 +12,13 @@
 
 ## 🛠️ 핵심 기술
 
-- 언어: Kotlin 2.2.20
+- 언어: Kotlin 2.2.20 (Coroutine 및 Flow 활용)
 - UI: XML 레이아웃
-- 아키텍처: Clean Architecture
+- 아키텍처: Clean Architecture (app, domain 모듈 분리)
 - 빌드: Gradle 8.13 (Kotlin DSL)
 - 대상: Android API 28~36 (Android 9.0~15)
 - JDK: OpenJDK 21.0.5
+- 테스트: JUnit 5, MockWebServer
 
 ---
 
@@ -36,6 +37,7 @@
 ```
 BookSearchAssignment/
 ├── app/                    # 프레젠테이션 계층 (UI, Activity, ViewModel)
+├── domain/                 # 도메인 계층 (비즈니스 로직, UseCase)
 ├── gradle/                 # Gradle 래퍼 및 설정
 ├── build.gradle.kts        # 루트 빌드 설정
 ├── settings.gradle.kts     # Gradle 설정
