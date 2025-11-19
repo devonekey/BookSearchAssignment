@@ -95,13 +95,15 @@ domain/src/main/kotlin/com/booksearch/assignment/domain/
 │   └── Books.kt                        # 여러 도서들을 다루는 모델
 ├── repository/
 │   └── BookRepository.kt               # 도서 Repository 인터페이스 정의
-└── usecase/
-    ├── GetBookmarkedBooksUseCase.kt    # 북마크된 도서들을 가져오는 유즈케이스
-    ├── ResetBookmarkedBooksUseCase.kt  # 가져온 북마크된 도서들을 초기화하고 다시 가져오는 유즈케이스
-    ├── ResetSearchedBooksUseCase.kt    # 검색된 도서들을 초기화하고 다시 검색하는 유즈케이스
-    ├── SearchBooksUseCase.kt           # 도서들을 검색하는 유즈케이스
-    ├── ToggleBookmarkUseCase.kt        # 도서를 북마크하거나 북마크를 제거하는 유즈케이스
-    └── UseCase.kt                      # 유즈케이스
+├── usecase/
+│   ├── GetBookmarkedBooksUseCase.kt    # 북마크된 도서들을 가져오는 유즈케이스
+│   ├── ResetBookmarkedBooksUseCase.kt  # 가져온 북마크된 도서들을 초기화하고 다시 가져오는 유즈케이스
+│   ├── ResetSearchedBooksUseCase.kt    # 검색된 도서들을 초기화하고 다시 검색하는 유즈케이스
+│   ├── SearchBooksUseCase.kt           # 도서들을 검색하는 유즈케이스
+│   ├── ToggleBookmarkUseCase.kt        # 도서를 북마크하거나 북마크를 제거하는 유즈케이스
+│   └── UseCase.kt                      # 유즈케이스
+└── util/
+    └── EffectivePrice.kt               # 도서의 최종 판매가를 계산
 ```
 
 ### domain 모듈 테스트 코드
@@ -113,12 +115,14 @@ domain/src/test/kotlin/com/booksearch/assignment/domain/
 │   └── BooksTest.kt
 ├── repository/
 │   └── FakeBookRepositoryImpl.kt
-└── usecase/
-    ├── GetBookmarkedBooksUseCaseTest.kt
-    ├── ResetBookmarkedBooksUseCaseTest.kt
-    ├── ResetSearchedBooksUseCaseTest.kt
-    ├── SearchBooksUseCaseTest.kt
-    └── ToggleBookmarkUseCaseTest.kt
+├── usecase/
+│   ├── GetBookmarkedBooksUseCaseTest.kt
+│   ├── ResetBookmarkedBooksUseCaseTest.kt
+│   ├── ResetSearchedBooksUseCaseTest.kt
+│   ├── SearchBooksUseCaseTest.kt
+│   └── ToggleBookmarkUseCaseTest.kt
+└── util/
+    └── EffectivePriceTest.kt
 ```
 
 ---
