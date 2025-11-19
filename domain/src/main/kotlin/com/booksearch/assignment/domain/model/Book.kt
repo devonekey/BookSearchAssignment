@@ -1,5 +1,6 @@
 package com.booksearch.assignment.domain.model
 
+import com.booksearch.assignment.domain.util.calculateEffectivePrice
 import java.util.Date
 
 /**
@@ -36,7 +37,7 @@ data class Book(
     val isBookmarked: Boolean = false
 ) {
     val effectivePrice: Int
-        get() = if (salePrice > 0) salePrice else price
+        get() = calculateEffectivePrice(price = price, salePrice = salePrice)
 
     override fun equals(other: Any?): Boolean =
         other is Book && hashCode() == other.hashCode()
